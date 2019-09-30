@@ -42,7 +42,7 @@ public class clientSimulator implements Runnable {
         try {
             sendRequest(uri + clientId);
         } catch (Exception e) {
-            status = " - Failed";
+            status = " - Failed (" + e.getMessage() + ")";
         }
 
         System.out.printf("Client[%s], Request #%d%s%n", clientId, requestNumber, status);
