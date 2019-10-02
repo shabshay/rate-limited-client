@@ -36,7 +36,7 @@ public class Main {
         input.setRequired(false);
         options.addOption(input);
 
-        input = new Option("i", "interval", true, "interval maximum wait time in seconds");
+        input = new Option("i", "interval", true, "interval maximum wait time in seconds (default is 5)");
         input.setRequired(false);
         options.addOption(input);
 
