@@ -12,10 +12,12 @@ public class clientSimulator implements Runnable {
     private static Random random = new Random();
     private String uri;
     private String clientId;
+    private int waitTimeInSeconds;
 
-    public clientSimulator(String clientId, String uri) {
+    public clientSimulator(String clientId, String uri, int waitTimeInSeconds) {
         this.uri = uri;
         this.clientId = clientId;
+        this.waitTimeInSeconds = waitTimeInSeconds;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class clientSimulator implements Runnable {
     }
 
     private void doWait() {
-        int seconds = random.nextInt(7);
+        int seconds = random.nextInt(waitTimeInSeconds);
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {

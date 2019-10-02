@@ -9,6 +9,7 @@ public class Main {
     private static String serverAddress = "http://localhost:8080/?clientId=";
     private static int numberOfClients;
     private static Thread[] clientsThreads;
+    private static int intervalMaxTimeInSeconds = 5;
 
     public static void main(String[] args) {
 
@@ -35,6 +36,10 @@ public class Main {
         input.setRequired(false);
         options.addOption(input);
 
+        input = new Option("i", "interval", true, "interval maximum wait time in seconds");
+        input.setRequired(false);
+        options.addOption(input);
+
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
@@ -47,6 +52,11 @@ public class Main {
             String addressArg = cmd.getOptionValue("address");
             if (addressArg != null){
                 serverAddress = addressArg;
+            }
+
+            String intervalArg = cmd.getOptionValue("interval");
+            if (intervalArg != null){
+                intervalMaxTimeInSeconds = Integer.parseInt(intervalArg);
             }
         } catch (Exception e) {
             if (e instanceof ParseException) {
@@ -65,13 +75,13 @@ public class Main {
 
     private static void startAllClients() {
         for (int i = 0; i < numberOfClients; i++) {
-            clientsThreads[i] = new Thread(new clientSimulator(Integer.toString(i + 1), serverAddress));
+            clientsThreads[i] = new Thread(new clientSimulator(Integer.toString(i + 1), serverAddress, intervalMaxTimeInSeconds));
             clientsThreads[i].start();
         }
     }
 
     private static void showWelcomeMessage() throws InterruptedException {
-        System.out.printf("Simulating %d clients to %s%n", numberOfClients, serverAddress);
+        System.out.printf("Simulating %d clients to %s with max wait time each of %d seconds.%n", numberOfClients, serverAddress, intervalMaxTimeInSeconds);
         System.out.println("Press any key to exit");
         System.out.print("Starting simulator in 3..");
         Thread.sleep(1000);
