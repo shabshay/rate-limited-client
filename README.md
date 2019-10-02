@@ -4,6 +4,7 @@
 2. Usage: rate limited clients simulator   
 -a,--address <arg>   server address (default value: http://localhost:8080/?clientId=)  
 -c,--clients <arg>   number of clients to simulate  
+-i,--interval <arg>  interval maximum wait time in seconds (default is 5)
   
 #####  Example: 
  java rateLimitedClient.Main -c 5  
